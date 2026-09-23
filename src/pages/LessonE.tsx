@@ -5,6 +5,7 @@ import { ScrollProgressBar } from "../components/ScrollProgressBar"
 import { Scrollytelling } from "../components/Scrollytelling"
 import { Formula } from "../components/Formula"
 import { EGraphic } from "../lessons/e/EGraphic"
+import { GrowthTrend } from "../lessons/e/GrowthTrend"
 
 function Step({ children }: { children: ReactNode }) {
   return <div className="max-w-md">{children}</div>
@@ -36,17 +37,20 @@ const steps = [
     </p>
     <Formula tex="\left(1+\tfrac{1}{2}\right)^{2} = 2{,}25" display />
     <p className="mt-3 text-ink-soft">Schon etwas mehr als vorher.</p>
+    <GrowthTrend step={2} />
   </Step>,
 
   <Step key="3">
     <p className="text-ink-soft mb-3">Vierteljährlich, also viermal im Jahr:</p>
     <Formula tex="\left(1+\tfrac{1}{4}\right)^{4} \approx 2{,}4414" display />
+    <GrowthTrend step={3} />
   </Step>,
 
   <Step key="4">
     <p className="text-ink-soft mb-3">Monatlich — zwölfmal im Jahr:</p>
     <Formula tex="\left(1+\tfrac{1}{12}\right)^{12} \approx 2{,}6130" display />
     <p className="mt-3 text-ink-soft">Der Zuwachs pro Schritt wird kleiner.</p>
+    <GrowthTrend step={4} />
   </Step>,
 
   <Step key="5">
@@ -55,6 +59,7 @@ const steps = [
     <p className="mt-3 text-ink-soft">
       Wir nähern uns einer ganz bestimmten Zahl — sieh dir die gestrichelte Linie an.
     </p>
+    <GrowthTrend step={5} />
   </Step>,
 
   <Step key="6">
@@ -63,6 +68,7 @@ const steps = [
       <span className="text-accent">immer weiter</span> unterteilen?
     </p>
     <Formula tex="\left(1+\tfrac{1}{8760}\right)^{8760} \approx 2{,}7181" display />
+    <GrowthTrend step={6} />
   </Step>,
 
   <Step key="7">
@@ -71,6 +77,7 @@ const steps = [
       wir <span className="text-accent font-hand text-2xl">e</span>.
     </p>
     <Formula tex="e = \lim_{n \to \infty} \left(1+\tfrac{1}{n}\right)^{n} \approx 2{,}718281828\ldots" display />
+    <GrowthTrend step={7} />
   </Step>,
 
   <Step key="8">
