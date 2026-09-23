@@ -50,8 +50,15 @@ export const topics: Topic[] = [
     description: "Formen, Winkel und die Konstanten, die sie verbinden.",
     lessons: [
       {
+        slug: "was-ist-pi",
+        title: "Was ist π?",
+        teaser: "Ein Verhältnis, das bei jedem Kreis exakt gleich bleibt — egal wie groß.",
+        minutes: 4,
+        status: "available",
+      },
+      {
         slug: "pi-vielecke",
-        title: "Wie berechnet man π?",
+        title: "Wie berechnet man π genau?",
         teaser: "Ein Kreis, eingeschlossen von immer mehr Vielecken.",
         minutes: 6,
         status: "available",

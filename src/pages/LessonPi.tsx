@@ -13,11 +13,12 @@ function Step({ children }: { children: ReactNode }) {
 const steps = [
   <Step key="0">
     <p className="text-2xl sm:text-3xl leading-snug font-hand text-ink">
-      Wie misst man den Umfang eines <span className="text-accent">Kreises</span> genau?
+      Wir wissen jetzt: <span className="text-accent">π = U ÷ d</span> — bei jedem Kreis exakt
+      gleich.
     </p>
     <p className="mt-4 text-ink-soft">
-      Ein Kreis mit Durchmesser 1. Sein Umfang ist genau <span className="text-accent">π</span>
-      — aber woher wissen wir das eigentlich?
+      Aber wie kommt man auf 3,14159…, ohne einen Kreis abzumessen? Ein Kreis mit Durchmesser 1
+      hat Umfang genau π.
     </p>
   </Step>,
 
@@ -25,6 +26,10 @@ const steps = [
     <p className="text-ink-soft mb-3">
       Idee von Archimedes: Zeichne ein Vieleck <span className="text-accent">in</span> den
       Kreis hinein. Ein Sechseck ist einfach zu berechnen.
+    </p>
+    <p className="mb-3 text-ink-faint text-sm">
+      Werkzeug dafür: der Sinus. Er gibt in einem rechtwinkligen Dreieck das Verhältnis von
+      Gegenkathete zu Hypotenuse an — damit lässt sich jede Seitenlänge des Vielecks berechnen.
     </p>
     <Formula tex="U_6 = 6 \cdot \sin(30^\circ) \approx 3{,}0000" display />
   </Step>,
@@ -84,8 +89,14 @@ export function LessonPi() {
       <LessonHeader topicName="Geometrie" />
 
       <div className="max-w-3xl mx-auto px-5 mb-16 sm:mb-24 text-center">
-        <h1 className="font-hand text-4xl sm:text-5xl text-ink mb-4">
-          Wie berechnet man <span className="text-accent">π</span>?
+        <Link
+          to="/lesson/was-ist-pi"
+          className="font-hand text-sm text-ink-faint hover:text-accent transition-colors"
+        >
+          ← Vorherige Lektion: Was ist π?
+        </Link>
+        <h1 className="font-hand text-4xl sm:text-5xl text-ink mb-4 mt-3">
+          Wie berechnet man <span className="text-accent">π</span> genau?
         </h1>
         <p className="text-ink-soft text-lg">
           Eine Herleitung über eingeschriebene Vielecke — scroll einfach weiter.
