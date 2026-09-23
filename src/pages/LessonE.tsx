@@ -29,6 +29,7 @@ const steps = [
     <p className="mt-3 text-ink">
       Nach einem Jahr hast du <span className="text-accent font-bold">2 €</span>.
     </p>
+    <GrowthTrend step={1} />
   </Step>,
 
   <Step key="2">
