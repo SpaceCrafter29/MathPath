@@ -10,8 +10,8 @@
   --font-hand: "Kalam", cursive;
   --font-body: "Karla", system-ui, sans-serif;
 
-  --color-paper: #f4ead4;
-  --color-paper-dark: #ece0c4;
+  --color-paper: #faf8f3;
+  --color-paper-dark: #f0ece2;
   --color-ink: #1c1a17;
   --color-ink-soft: #4a463f;
   --color-ink-faint: #8a8374;
@@ -32,10 +32,9 @@ body {
   margin: 0;
   background: var(--color-paper);
   background-image:
-    radial-gradient(var(--color-ink-faint) 0.5px, transparent 0.5px);
+    radial-gradient(color-mix(in srgb, var(--color-ink-faint) 18%, transparent) 0.5px, transparent 0.5px);
   background-size: 22px 22px;
   background-attachment: fixed;
-  background-opacity: 0.08;
   color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
