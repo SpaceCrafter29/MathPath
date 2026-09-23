@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@import "@fontsource/kalam/400.css";
+@import "@fontsource/kalam/700.css";
+@import "@fontsource/karla/400.css";
+@import "@fontsource/karla/500.css";
+@import "@fontsource/karla/600.css";
+@import "@fontsource/karla/700.css";
+
+@theme {
+  --font-hand: "Kalam", cursive;
+  --font-body: "Karla", system-ui, sans-serif;
+
+  --color-paper: #f4ead4;
+  --color-paper-dark: #ece0c4;
+  --color-ink: #1c1a17;
+  --color-ink-soft: #4a463f;
+  --color-ink-faint: #8a8374;
+  --color-accent: #d9541f;
+  --color-accent-soft: #f0a875;
+  --color-accent-bg: #fbe4d1;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  background-image:
+    radial-gradient(var(--color-ink-faint) 0.5px, transparent 0.5px);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+  background-opacity: 0.08;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3, .font-hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: var(--color-accent-bg);
+  color: var(--color-ink);
+}
+
+/* Thin hand-drawn underline / wiggle accents */
+.wiggle-underline {
+  position: relative;
+  display: inline-block;
+}
+.wiggle-underline::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -0.08em;
+  height: 0.5em;
+  background: var(--color-accent-bg);
+  z-index: -1;
+  transform: rotate(-0.6deg);
+}
+
+/* scrollbar - keep it subtle, matches paper theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-faint);
+  border-radius: 6px;
+}
