@@ -1,5 +1,5 @@
 import type { RoughSVG } from "roughjs/bin/svg"
-import { ACCENT, INK, RoughCanvas } from "../../components/RoughCanvas"
+import { ACCENT, INK, PAPER, RoughCanvas } from "../../components/RoughCanvas"
 
 const W = 440
 const H = 340
@@ -69,6 +69,73 @@ function drawAxes(rc: RoughSVG, svg: SVGSVGElement) {
   addText(svg, PAD_L - 10, valueToY(1) + 4, "1€", { size: 13, color: INK, anchor: "end" })
 }
 
+const CONV_N: (number | typeof Infinity)[] = [1, 2, 4, 12, 365, 8760, Infinity]
+const CONV_X = 292
+const CONV_Y = 176
+const CONV_W = 110
+const CONV_H = 60
+const CONV_V_MIN = 1.9
+const CONV_V_MAX = 2.8
+
+function convValue(n: number | typeof Infinity): number {
+  return n === Infinity ? E : compoundValue(n)
+}
+
+function drawConvergenceInset(rc: RoughSVG, svg: SVGSVGElement, revealCount: number) {
+  const convY = (v: number) => {
+    const t = (v - CONV_V_MIN) / (CONV_V_MAX - CONV_V_MIN)
+    return CONV_Y + CONV_H - t * CONV_H
+  }
+  const convX = (i: number) => CONV_X + (i / (CONV_N.length - 1)) * CONV_W
+
+  svg.appendChild(
+    rc.rectangle(CONV_X - 10, CONV_Y - 16, CONV_W + 20, CONV_H + 30, {
+      stroke: INK,
+      strokeWidth: 1,
+      roughness: 1.6,
+      fill: PAPER,
+      fillStyle: "solid",
+    }),
+  )
+  addText(svg, CONV_X - 6, CONV_Y - 4, "Zuwachs pro Schritt", { size: 10.5, color: INK })
+  svg.appendChild(
+    rc.line(CONV_X, convY(E), CONV_X + CONV_W, convY(E), {
+      stroke: INK,
+      strokeWidth: 0.8,
+      strokeLineDash: [3, 3],
+      roughness: 1,
+    }),
+  )
+
+  const shown = CONV_N.slice(0, revealCount)
+  const points: [number, number][] = shown.map((n, i) => [convX(i), convY(convValue(n))])
+  if (points.length >= 2) {
+    svg.appendChild(rc.curve(points, { stroke: INK, strokeWidth: 1.6, roughness: 1 }))
+  }
+  points.forEach(([x, y], i) => {
+    const isLast = i === points.length - 1
+    svg.appendChild(
+      rc.circle(x, y, isLast ? 7 : 4.5, {
+        fill: isLast ? ACCENT : PAPER,
+        fillStyle: "solid",
+        stroke: INK,
+        strokeWidth: 1,
+      }),
+    )
+  })
+
+  if (revealCount >= 2) {
+    const prev = convValue(CONV_N[revealCount - 2])
+    const curr = convValue(CONV_N[revealCount - 1])
+    const delta = curr - prev
+    addText(svg, CONV_X - 6, CONV_Y + CONV_H + 22, `+${delta.toFixed(delta < 0.01 ? 5 : 4).replace(".", ",")} ggü. vorher`, {
+      size: 11,
+      color: ACCENT,
+      weight: "bold",
+    })
+  }
+}
+
 function drawEReference(svg: SVGSVGElement, rc: RoughSVG, strong: boolean) {
   const y = valueToY(E)
   const g = rc.line(PAD_L, y, W - PAD_R, y, {
@@ -122,6 +189,7 @@ export function EGraphic({ step }: { step: number }) {
           const [lastX, lastY] = points[points.length - 1]
           svg.appendChild(rc.circle(lastX, lastY, 12, { fill: ACCENT, fillStyle: "solid", stroke: INK }))
           addText(svg, PAD_L + 6, PAD_T + 6, "n → ∞ (stetige Verzinsung)", { size: 13, color: INK })
+          drawConvergenceInset(rc, svg, Math.min(step, CONV_N.length))
           return
         }
 
@@ -149,7 +217,7 @@ export function EGraphic({ step }: { step: number }) {
             const v = (1 + 1 / n) ** k
             svg.appendChild(
               rc.circle(fracToX(k / n), valueToY(v), 7, {
-                fill: k === n ? ACCENT : "#f4ead4",
+                fill: k === n ? ACCENT : PAPER,
                 fillStyle: "solid",
                 stroke: INK,
                 strokeWidth: 1.3,
@@ -164,13 +232,15 @@ export function EGraphic({ step }: { step: number }) {
 
         const finalValue = compoundValue(n)
         const [fx, fy] = points[points.length - 1]
-        addText(svg, fx - 8, fy - 16, finalValue.toFixed(4).replace(".", ","), {
+        const closeToE = showE
+        addText(svg, fx - 8, closeToE ? fy + 22 : fy - 16, finalValue.toFixed(4).replace(".", ","), {
           size: 15,
           color: ACCENT,
           anchor: "end",
           weight: "bold",
         })
         addText(svg, PAD_L + 6, PAD_T + 6, `n = ${n.toLocaleString("de-DE")}`, { size: 14, color: INK })
+        drawConvergenceInset(rc, svg, Math.min(step, CONV_N.length))
       }}
     />
   )

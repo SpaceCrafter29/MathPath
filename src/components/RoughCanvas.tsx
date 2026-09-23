@@ -36,3 +36,4 @@ export function RoughCanvas({ width, height, draw, deps, className, viewBox }: R
 
 export const INK = "#1c1a17"
 export const ACCENT = "#d9541f"
+export const PAPER = "#f8f4e8"
